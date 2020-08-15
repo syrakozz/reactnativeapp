@@ -12,11 +12,15 @@ import {
     SafeAreaView,
     View,
     Image,
+    TouchableOpacity,
     FlatList,
     StyleSheet,
     Text
 } from 'react-native';
 import Color from "../core/Color"
+import {exp} from "react-native-reanimated";
+import Config from "../core/Config";
+
 
 class Home extends Component {
 
@@ -43,7 +47,7 @@ class Home extends Component {
     }
 
     prepareData(){
-        axios.get("http://localhost:3066/api/admin/technician/list").then((res)=>{
+        axios.get(Config.url).then((res)=>{
 
 
             const result = res.data.data
@@ -65,21 +69,25 @@ class Home extends Component {
     renderView(item){
 
 
-        return <View style={{
-           // backgroundColor:"green",
-            margin:19,
-            flexDirection:"row"
+        return <TouchableOpacity  onPress={()=>{
+            this.props.goto()
         }}>
-            <View style={{width:60,borderRadius:30,height:60}}>
-                <Image source={{uri:item.full_picture}} style={{width:60,height:60}} />
-            </View>
-            <View style={{marginLeft:10,marginRight:10}}>
-                <Text style={styles.minitext}>{item.name}</Text>
-                <Text style={{fontWeight:"bold", padding:5,paddingRight:50}} >{item.email}</Text>
-                <Text style={styles.minitext}>{item.location}</Text>
-            </View>
+            <View style={{
+                // backgroundColor:"green",
+                margin:19,
+                flexDirection:"row"
+            }}>
+                <View style={{width:60,borderRadius:30,height:60}}>
+                    <Image source={{uri:item.full_picture}} style={{width:60,height:60}} />
+                </View>
+                <View style={{marginLeft:10,marginRight:10}}>
+                    <Text style={styles.minitext}>{item.name}</Text>
+                    <Text style={{fontWeight:"bold", padding:5,paddingRight:50}} >{item.email}</Text>
+                    <Text style={styles.minitext}>{item.location}</Text>
+                </View>
 
-        </View>
+            </View>
+        </TouchableOpacity>
     }
 
     render (){
@@ -112,6 +120,9 @@ renderItem={({item})=>this.renderView(item)}
 }
 
 export default Home;
+
+
+
 
 
 const styles = StyleSheet.create({
