@@ -11,6 +11,7 @@ import axios from "axios"
 import {
     SafeAreaView,
     View,
+    Image,
     FlatList,
     StyleSheet,
     Text
@@ -24,12 +25,16 @@ class Home extends Component {
 
         this.state = {
             data:[],
-            isloading:true
+            isloading:true,
+            isFetching: false,
         }
 
         console.log("this screen constructor is just started")
     }
 
+    onRefresh() {
+        this.setState({isFetching: true,},() => {this.prepareData();});
+    }
 
     componentDidMount() {
         console.log("this screen  is just started")
@@ -45,11 +50,14 @@ class Home extends Component {
             debugger
             this.setState({
                 data:result,
-                isloading:false
+                isloading:false,
+                isFetching:false
             })
 
 
             console.log("response is here")
+        }).catch(()=>{
+            console.log("xxx")
         })
 
     }
@@ -62,8 +70,8 @@ class Home extends Component {
             margin:19,
             flexDirection:"row"
         }}>
-            <View style={{width:60,borderRadius:30,height:60,borderColor:Color.header.color1,borderWidth:2}}>
-                <Text style={{color:Color.header.color1,fontWeight:"bold",fontSize:22,padding:20,paddingTop:15,textAlign:"center"}}>{item.status}</Text>
+            <View style={{width:60,borderRadius:30,height:60}}>
+                <Image source={{uri:item.full_picture}} style={{width:60,height:60}} />
             </View>
             <View style={{marginLeft:10,marginRight:10}}>
                 <Text style={styles.minitext}>{item.name}</Text>
@@ -84,7 +92,7 @@ class Home extends Component {
         }
 
 
-        return  ( <SafeAreaView>
+        return  ( <SafeAreaView style={{flex:1}}>
 <Text style={{fontSize:24,fontWeight:"bold",color:Color.header.color1,margin:15}}> Top Heading</Text>
 
 
@@ -92,6 +100,8 @@ class Home extends Component {
 
            data={this.state.data}
 renderItem={({item})=>this.renderView(item)}
+           onRefresh={() => this.onRefresh()}
+           refreshing={this.state.isFetching}
 
            />
 
