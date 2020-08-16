@@ -20,9 +20,10 @@ import {
 import Color from "../core/Color"
 import {exp} from "react-native-reanimated";
 import Config from "../core/Config";
+import CoreEngine from "./CoreEngine";
 
 
-class Home extends Component {
+class Home extends CoreEngine {
 
     constructor(props) {
         super(props);
@@ -41,6 +42,7 @@ class Home extends Component {
 
         console.log("constructor")
     }
+
 
     onRefresh() {
         this.setState({isFetching: true,},() => {this.prepareData();});
@@ -100,17 +102,13 @@ class Home extends Component {
     }
 
     render (){
-        console.log("render")
-
       if(this.state.isloading){
-            return <SafeAreaView >
-                <Text style={{textAlign:"center",fontWeight:"bold",fontSize:24,color: "red"}}>Loading...</Text>
-            </SafeAreaView>;
+            return this.renderLoading();
         }
 
 
         return  ( <SafeAreaView style={{flex:1}}>
-<Text style={{fontSize:24,fontWeight:"bold",color:Color.header.color1,margin:15}}> Top Heading</Text>
+<Text style={{fontSize:24,fontWeight:"bold",color:Color.header.color1,margin:15}}> Top Heading {this.renderDate("sss")}</Text>
 
 
            <FlatList

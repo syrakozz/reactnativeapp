@@ -1,10 +1,11 @@
 // In App.js in a new project
 
 import React, { useState, useEffect } from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text,Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsScreen from "./screen/DetailsScreen";
+import Home from "./screen/home";
 
 
 
@@ -14,7 +15,13 @@ function HomeScreen({ navigation }) {
 
     useEffect(()=>{
 
-        console.log("HomeScreen only 1");
+
+        if( Platform.OS === 'ios' ){
+            alert("your are in ios")
+        }else{
+            alert("your are in android ")
+        }
+
         //setCount(5);
     },[]);
 
@@ -23,7 +30,10 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, }}>
 
 
-            <Text>the total count is {count}</Text>
+            <Text style={{margin:Platform.OS === 'ios'?10:15}}>sasaassssthe total count is {count}</Text>
+
+
+
 
 
 
@@ -35,7 +45,10 @@ function HomeScreen({ navigation }) {
              />
 
 
-             <DetailsScreen details={"testing 123"} number={count} subtitle={"aaaa"}  />
+            {Platform.OS === 'ios' ?<Text>ios</Text>:<Text>android</Text>}
+
+
+
         </View>
     );
 }
