@@ -29,11 +29,17 @@ class Home extends Component {
 
         this.state = {
             data:[],
+            finalvalue : 0,
             isloading:true,
             isFetching: false,
         }
 
-        console.log("this screen constructor is just started")
+       var  a  =1 ;
+        var b = 3
+
+        const text = a.toString()+b.toString()
+
+        console.log("constructor")
     }
 
     onRefresh() {
@@ -41,9 +47,12 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        console.log("this screen  is just started")
-
+        console.log("componentDidMount")
         this.prepareData()
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount")
     }
 
     prepareData(){
@@ -91,9 +100,9 @@ class Home extends Component {
     }
 
     render (){
+        console.log("render")
 
-
-        if(this.state.isloading){
+      if(this.state.isloading){
             return <SafeAreaView >
                 <Text style={{textAlign:"center",fontWeight:"bold",fontSize:24,color: "red"}}>Loading...</Text>
             </SafeAreaView>;

@@ -5,6 +5,9 @@ import Home from "./screen/home"
 import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+
+
 function HomeScreen({ navigation }) {
 
     return (
