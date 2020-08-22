@@ -1,9 +1,18 @@
-/**
- * @format
- */
 
-import {AppRegistry} from 'react-native';
-import App2 from './App2';
-import {name as appName} from './app.json';
+import { AppRegistry } from 'react-native';
+import React from 'react';
+import App3 from './App3';
+import { name as appName } from './app.json';
+import { Provider } from 'react-redux';
 
-AppRegistry.registerComponent(appName, () => App2);
+import configureStore from './redux/configureStore';
+
+const store = configureStore()
+
+const RNRedux = () => (
+    <Provider store = { store }>
+        <App3 />
+    </Provider>
+)
+
+AppRegistry.registerComponent(appName, () => RNRedux);

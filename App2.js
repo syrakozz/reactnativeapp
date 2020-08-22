@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, View, Text,Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-community/async-storage';
 import DetailsScreen from "./screen/DetailsScreen";
 import Home from "./screen/home";
 
@@ -13,13 +14,12 @@ function HomeScreen({ navigation }) {
 
     const [count,setCount] = useState(0)
 
-    useEffect(()=>{
+    useEffect(async ()=>{
 
-
-        if( Platform.OS === 'ios' ){
-            alert("your are in ios")
-        }else{
-            alert("your are in android ")
+        const value = await AsyncStorage.getItem('thecounter')
+        if(value !== null) {
+            // value previously stored
+            setCount(parseInt(value));
         }
 
         //setCount(5);
@@ -38,8 +38,12 @@ function HomeScreen({ navigation }) {
 
 
             <Button title={"press me"} onPress={
-                ()=> {
-                    setCount(count+1)
+                 async ()=> {
+
+                     const value = parseInt(count)+1
+                    setCount(value)
+
+                    await AsyncStorage.setItem('thecounter', value.toString())
                 }
             }
              />
